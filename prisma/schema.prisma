@@ -7,20 +7,104 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
-model Example {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
+// use case 1
 
 model AidRecipient {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String
-  age       Int?
+  id                 String  @id @default(cuid())
+  name               String
+  age                Int
+  previousAddress    String
+  totalFamilyMembers Int
+  partnerName        String?
+  partnerAge         Int?
+  kids               Kid[]
+  file               Bytes
+}
+
+model Kid {
+  id       String       @id @default(cuid())
+  parentId String
+  parent   AidRecipient @relation(fields: [parentId], references: [id])
+  name     String
+  age      Int
+
+  @@index([parentId])
+}
+
+// use case 2
+
+model Donor {
+  id                      String    @id @default(cuid())
+  name                    String
+  mailingAddress          String
+  phoneNumber             String
+  email                   String    @unique
+  donorType               DonorType
+  preferredCommunication  String
+  age                     Int?
+  organizationHeadquarter String?
+  principalContactPerson  String?
+}
+
+enum DonorType {
+  INDIVIDUAL
+  ORGANIZATION
+}
+
+/// use case 5
+
+enum InventoryStatus {
+  LOW
+  MEDIUM
+  HIGH
+  EXCESS
+}
+
+model AidCategory {
+  id              Int             @id @default(autoincrement())
+  name            String          @unique
+  inventoryStatus InventoryStatus
+  items           AidItem[]
+}
+
+// use case 6
+model AidItem {
+  id              Int         @id @default(autoincrement())
+  name            String
+  quantity        Int
+  aidCategoryId   Int
+  aidCategory     AidCategory @relation(fields: [aidCategoryId], references: [id])
+  expiryDate      DateTime?
+  mainIngredients String?
+  allergenInfo    String?
+  brand           String?
+  numericSize     Float?
+  alphabeticSize  String?
+  relatedKits     KitItem[]
+
+  @@index([aidCategoryId])
+}
+
+model Kit {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  kitItems KitItem[]
+}
+
+model KitItem {
+  kitId    Int
+  itemId   Int
+  quantity Int
+
+  item AidItem @relation(fields: [itemId], references: [id])
+  kit  Kit     @relation(fields: [kitId], references: [id])
+
+  @@id([itemId, kitId])
+  @@index([itemId])
+  @@index([kitId])
 }
