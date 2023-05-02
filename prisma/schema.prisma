@@ -23,7 +23,6 @@ model AidRecipient {
   partnerName        String?
   partnerAge         Int?
   kids               Kid[]
-  file               Bytes
 }
 
 model Kid {

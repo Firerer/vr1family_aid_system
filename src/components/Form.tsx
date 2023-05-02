@@ -104,7 +104,6 @@ export function Form<Schema extends z.ZodTypeAny, Data = z.infer<Schema>>({
       submitFn(data);
     } else {
       console.log(err?.array);
-      window.alert("unhandled error" + err?.array?.[0].toString());
     }
   };
 

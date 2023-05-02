@@ -49,7 +49,7 @@ export const DonorSchema = z.union([IndividualDonor, OrganizationDonor]);
 // use case 5
 export const InventoryStatus = z.enum(["LOW", "MEDIUM", "HIGH", "EXCESS"]);
 export const AidCategorySchema = z.object({
-  name: z.string(),
+  name: nonempty,
   inventoryStatus: InventoryStatus,
 });
 
