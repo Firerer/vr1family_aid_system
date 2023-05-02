@@ -22,9 +22,9 @@ const DonerForm: React.FC = () => {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
     for (const element of form.elements) {
-      if (element instanceof HTMLInputElement && element.type === "number") {
-        data[element.name] = parseFloat(data[element.name]);
-      }
+      // if (element instanceof HTMLInputElement && element.type === "number") {
+      //   data[element.name] = parseFloat(data[element.name]);
+      // }
     }
     if (data.donorType === DonorType.enum.ORGANIZATION) {
       delete data.age;
