@@ -41,7 +41,7 @@ export default function() {
       <Select
         type="select"
         name="aidItemType"
-        selections={["FOOD", "CLOTHING"]}
+        options={["FOOD", "CLOTHING"]}
         onChange={(e) => setType(e.target.value)}
       />
 

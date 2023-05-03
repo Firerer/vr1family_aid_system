@@ -1,7 +1,7 @@
 import { z } from "zod";
 const nonempty = z.string().trim().min(1, { message: "Field cannot be empty" });
 const date = z.string().datetime({ message: "Invalid date" });
-const age = z.coerce
+const positiveInteger = z.coerce
   .number()
   .int({ message: "Age must be an integer" })
   .finite({ message: "Age must be a finite number" })
@@ -9,16 +9,16 @@ const age = z.coerce
 
 export const KidSchema = z.object({
   name: nonempty,
-  age: age,
+  age: positiveInteger,
 });
 
 export const AidRecipientSchema = z.object({
-  name: z.string(),
-  age: z.number(),
-  previousAddress: z.string(),
-  totalFamilyMembers: z.number(),
-  partnerName: z.string().optional(),
-  partnerAge: z.number().optional(),
+  name: nonempty,
+  age: positiveInteger,
+  previousAddress: nonempty,
+  totalFamilyMembers: positiveInteger.gte(1),
+  partnerName: nonempty.optional(),
+  partnerAge: positiveInteger.optional(),
   kids: z.array(KidSchema).optional(),
 });
 
@@ -28,18 +28,16 @@ const CommonDonorFields = z.object({
   name: nonempty,
   mailingAddress: nonempty,
   phoneNumber: nonempty,
-  email: z.string().email(),
+  email: nonempty.email(),
   preferredCommunication: PerferedCommunication,
   donorType: DonorType,
 });
 
 export const IndividualDonor = CommonDonorFields.extend({
-  donorType: z.literal("INDIVIDUAL"),
-  age: age,
+  age: positiveInteger,
 });
 
 export const OrganizationDonor = CommonDonorFields.extend({
-  donorType: z.literal("ORGANIZATION"),
   organizationHeadquarter: nonempty,
   principalContactPerson: nonempty,
 });
