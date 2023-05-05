@@ -62,7 +62,6 @@ export default function ItemRequestForm() {
         return;
       }
       const kitItemTable = document.querySelector('#kit-item-table');
-      console.log(kitItemTable.rows.length)
       const hasRows = kitItemTable && kitItemTable.rows.length > 1;
       if(!hasRows){
         console.log("no items have been added")
@@ -97,7 +96,6 @@ export default function ItemRequestForm() {
               setSelectedCategoryName(e.target.value);
               const selectedCategory = categories.find(category => category.name == e.target.value);
               setSelectedCategory(selectedCategory)
-              console.log(selectedCategory)
             }}
           />
           
