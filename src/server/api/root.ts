@@ -5,8 +5,10 @@ import {
   DonorSchema,
   AidItem,
   Kit,
+  ItemRequest
 } from "prisma/zod";
 import { Prisma } from "@prisma/client";
+import { string } from "zod";
 
 /**
  * This is the primary router for your server.
@@ -22,10 +24,39 @@ export const appRouter = createTRPCRouter({
     getAll: publicProcedure.query(async ({ ctx }) => {
       return await ctx.prisma.aidItem.findMany();
     }),
+    getByCategory: publicProcedure.input(
+      string()
+    ).query(async ({ input ,ctx }) => {
+      return await ctx.prisma.aidItem.findMany({
+        where:{
+          aidCategory:{
+            name : input
+          } 
+        }
+      });
+    }),
   }),
-  aidKit: publicProcedure.input(Kit).mutation(async ({ input, ctx }) => {
-    return await ctx.prisma.kit.create({ data: input });
+  aidKit: createTRPCRouter({
+    create: publicProcedure
+      .input(Kit)
+      .mutation(async ({ input, ctx }) => {
+        return await ctx.prisma.kit.create({ data: input });
+      }),
+    getAll: publicProcedure.query(async ({ ctx }) => {
+      return await ctx.prisma.kit.findMany({
+        include:{
+          kitItems:{
+            include:{
+              item:true
+            }
+          }
+        }
+      });
+    }),
   }),
+  // aidKit: publicProcedure.input(Kit).mutation(async ({ input, ctx }) => {
+  //   return await ctx.prisma.kit.create({ data: input });
+  // }),
   aidCategory: createTRPCRouter({
     create: publicProcedure
       .input(AidCategorySchema)
@@ -33,7 +64,11 @@ export const appRouter = createTRPCRouter({
         return await ctx.prisma.aidCategory.create({ data: input });
       }),
     getAll: publicProcedure.query(async ({ ctx }) => {
-      return await ctx.prisma.aidCategory.findMany();
+      return await ctx.prisma.aidCategory.findMany({
+        include:{
+          items:true
+        }
+      });
     }),
   }),
 
@@ -71,6 +106,16 @@ export const appRouter = createTRPCRouter({
         }
       }),
   }),
+  itemRequest: createTRPCRouter({
+    create: publicProcedure
+      .input(ItemRequest)
+      .mutation(async ({ input, ctx }) => {
+        return await ctx.prisma.itemRequest.create({
+          data: input,
+        });
+      }),
+  }),
+  
 });
 
 // export type definition of API

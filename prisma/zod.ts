@@ -23,6 +23,7 @@ export const AidRecipientSchema = z.object({
 });
 
 export const DonorType = z.enum(["INDIVIDUAL", "ORGANIZATION"]);
+export const RequestItemType = z.enum(["Pre-packed Aid Kits", "Individual Items"]);
 export const PerferedCommunication = z.enum(["EMAIL", "PHONE", "MAIL"]);
 const CommonDonorFields = z.object({
   name: nonempty,
@@ -65,10 +66,22 @@ export const KitItem = z.object({
   kitId: z.number(),
   itemId: z.number(),
   quantity: z.number(),
+  item: AidItem,
 });
 
 export const Kit = z.object({
   id: z.number(),
   name: z.string(),
   items: z.array(KitItem),
+});
+
+export const ItemRequest = z.object({
+  itemType: z.string(), 
+  itemCategory:z.string(),
+  itemName:z.string(),
+  // quantity:z.string().refine((val) => !Number.isNaN(parseInt(val, 10)), {
+  //   message: "Expected number, received a string"
+  // }),
+  quantity:z.number(),
+  note:z.string(),
 });

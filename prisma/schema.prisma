@@ -107,3 +107,11 @@ model KitItem {
   @@index([itemId])
   @@index([kitId])
 }
+model ItemRequest{
+  id       Int       @id @default(autoincrement())
+  itemType     String    
+  itemCategory String
+  itemName String
+  quantity Int
+  note String
+}
