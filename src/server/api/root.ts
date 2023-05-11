@@ -5,7 +5,8 @@ import {
   DonorSchema,
   AidItem,
   Kit,
-  ItemRequest
+  ItemRequest,
+  DonatedItem
 } from "prisma/zod";
 import { Prisma } from "@prisma/client";
 import { string } from "zod";
@@ -105,6 +106,11 @@ export const appRouter = createTRPCRouter({
           console.log(error);
         }
       }),
+      getAll: publicProcedure.query(async ({ ctx }) => {
+        return await ctx.prisma.donor.findMany({
+          
+        });
+      }),
   }),
   itemRequest: createTRPCRouter({
     create: publicProcedure
@@ -115,7 +121,15 @@ export const appRouter = createTRPCRouter({
         });
       }),
   }),
-  
+  donatedItemRequest: createTRPCRouter({
+    create: publicProcedure
+      .input(DonatedItem)
+      .mutation(async ({ input, ctx }) => {
+        return await ctx.prisma.donatedItem.create({
+          data: input,
+        });
+      }),
+  }),
 });
 
 // export type definition of API

@@ -85,3 +85,8 @@ export const ItemRequest = z.object({
   quantity:z.number(),
   note:z.string(),
 });
+export const DonatedItem = z.object({
+  donor: DonorSchema, 
+  item: AidItem,
+  quantity: z.number(),
+});

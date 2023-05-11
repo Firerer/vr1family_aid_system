@@ -48,6 +48,7 @@ model Donor {
   age                     Int?
   organizationHeadquarter String?
   principalContactPerson  String?
+  donatedItems DonatedItem[]
 }
 
 enum DonorType {
@@ -85,7 +86,7 @@ model AidItem {
   numericSize     Float?
   alphabeticSize  String?
   relatedKits     KitItem[]
-
+  donatedItems DonatedItem[]
   @@index([aidCategoryId])
 }
 
@@ -114,4 +115,15 @@ model ItemRequest{
   itemName String
   quantity Int
   note String
+}
+
+model DonatedItem{
+  id       Int       @id @default(autoincrement())
+  donorId   String
+  aidItemId Int
+  donor Donor @relation(fields: [donorId], references: [id])
+  aidItem AidItem @relation(fields: [aidItemId],references: [id])
+  quantity Int
+  @@index([donorId])
+  @@index([aidItemId])
 }

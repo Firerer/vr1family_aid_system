@@ -8,6 +8,7 @@ import AidCategoryForm from "~/components/AidCategoryForm";
 import AidKitForm from "~/components/AidKitForm";
 import AidItemForm from "~/components/AidItemForm";
 import ItemRequestForm from "~/components/ItemRequestForm";
+import DonatedItemForm from "~/components/DonatedItemForm";
 
 // const prepopulate =
 //   "Dry Food Items, Hot Food Items, Personal Hygiene, Warm Clothing, Casual Clothing, Bedding, Footwear, Electrical Supplies and Furniture Supplies";
@@ -36,6 +37,7 @@ const Home: NextPage = () => {
         <AidRecipientForm />
         <AidDonorForm />
         <ItemRequestForm />
+        <DonatedItemForm />
       </main>
     </>
   );
