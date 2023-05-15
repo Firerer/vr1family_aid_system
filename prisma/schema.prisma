@@ -36,6 +36,17 @@ model Kid {
 }
 
 // use case 2
+model PrivateAidRecipient {
+  id                 String  @id @default(cuid())
+  name               String
+  nationality        String
+  idDocumentNumber1  String
+  idExpiryDate1      date
+  idDocumentNumber2  String?
+  idExpiryDate2      date?
+  idDocumentNumber3  String?
+  idExpiryDate3      date?
+}
 
 model Donor {
   id                      String    @id @default(cuid())

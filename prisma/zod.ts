@@ -22,6 +22,17 @@ export const AidRecipientSchema = z.object({
   kids: z.array(KidSchema).optional(),
 });
 
+export const PrivateAidRecipeintSchema = z.object({
+  name: nonempty,
+  nationality: nonempty,
+  idDocumentNumber1: nonempty,
+  idExpiryDate1: date,
+  idDocumentNumber2: nonempty.optional(),
+  idExpiryDate2: date.optional(),
+  idDocumentNumber3: nonempty.optional(), 
+  idExpiryDate3: date.optional(),
+});
+
 export const DonorType = z.enum(["INDIVIDUAL", "ORGANIZATION"]);
 export const RequestItemType = z.enum(["Pre-packed Aid Kits", "Individual Items"]);
 export const PerferedCommunication = z.enum(["EMAIL", "PHONE", "MAIL"]);
