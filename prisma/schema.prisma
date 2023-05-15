@@ -41,11 +41,11 @@ model PrivateAidRecipient {
   name               String
   nationality        String
   idDocumentNumber1  String
-  idExpiryDate1      date
+  idExpiryDate1      DateTime
   idDocumentNumber2  String?
-  idExpiryDate2      date?
+  idExpiryDate2      DateTime?
   idDocumentNumber3  String?
-  idExpiryDate3      date?
+  idExpiryDate3      DateTime?
 }
 
 model Donor {
@@ -72,11 +72,11 @@ model PrivateAidDonor {
   name               String
   nationality        String
   idDocumentNumber1  String
-  idExpiryDate1      date
+  idExpiryDate1      DateTime
   idDocumentNumber2  String?
-  idExpiryDate2      date?
+  idExpiryDate2      DateTime?
   idDocumentNumber3  String?
-  idExpiryDate3      date?
+  idExpiryDate3      DateTime?
   donorType          DonorType
   abn                Int?
 }
