@@ -56,6 +56,24 @@ export const OrganizationDonor = CommonDonorFields.extend({
 
 export const DonorSchema = z.union([IndividualDonor, OrganizationDonor]);
 
+export const PrivateAidDonor = z.object({
+  name: nonempty,
+  nationality: nonempty,
+  idDocumentNumber1: nonempty,
+  idExpiryDate1: date,
+  idDocumentNumber2: nonempty.optional(),
+  idExpiryDate2: date.optional(),
+  idDocumentNumber3: nonempty.optional(), 
+  idExpiryDate3: date.optional(),
+  donorType: DonorType,
+});
+
+export const PrivateOrganizationDonor = PrivateAidDonor.extend({
+  abn: positiveInteger,
+})
+
+export const PrivateDonorSchema = z.union([PrivateAidDonor, PrivateOrganizationDonor]);
+
 // use case 5
 export const InventoryStatus = z.enum(["LOW", "MEDIUM", "HIGH", "EXCESS"]);
 export const AidCategorySchema = z.object({

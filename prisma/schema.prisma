@@ -67,6 +67,20 @@ enum DonorType {
   ORGANIZATION
 }
 
+model PrivateAidDonor {
+  id                 String  @id @default(cuid())
+  name               String
+  nationality        String
+  idDocumentNumber1  String
+  idExpiryDate1      date
+  idDocumentNumber2  String?
+  idExpiryDate2      date?
+  idDocumentNumber3  String?
+  idExpiryDate3      date?
+  donorType          DonorType
+  abn                Int?
+}
+
 /// use case 5
 
 enum InventoryStatus {
