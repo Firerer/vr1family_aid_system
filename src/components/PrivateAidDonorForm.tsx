@@ -1,35 +1,42 @@
 import React, { useState } from "react";
 import z from "zod";
-import { DonorType, PrivateDonorSchema } from "prisma/zod";
+import { DonorType, PrivateAidDonor } from "prisma/zod";
 import { Field, Form, Select } from "./Form";
+import { api } from "~/utils/api";
 
-type DonerT = z.infer<typeof PrivateDonorSchema>;
+type DonerT = z.infer<typeof PrivateAidDonor>;
 export default function DonerForm() {
+  const mutate = api.privateAidDoner.create.useMutation();
   const [donorType, setDonorType] = useState<DonerT["donorType"]>(
     DonorType.enum.ORGANIZATION,
   );
   return (
     <Form
-      schema={PrivateDonorSchema}
+      schema={PrivateAidDonor}
       title="Donor Form - Private Information"
       submitFn={(data) => {
-        console.log(data);
+        mutate.mutate(data);
+        if (mutate.isError) {
+          console.log(mutate.error);
+        }
+        console.log(mutate.data);
       }}
     >
       <div className="grid">
         <Field name="name" />
+        <Field name="nationality"/>
       </div>
       <div className="grid">
-        <Field name="ID 1 DocumentNumber" />
-        <Field name="ID 1 ExpiryDate" type="date" />
+        <Field name="idDocumentNumber1" />
+        <Field name="idExpiryDate1" type="date" optional/>
       </div>
       <div className="grid">
-        <Field name="ID 2 DocumentNumber" optional />
-        <Field name="ID 2 expiryDate" type="date" optional />
+        <Field name="idDocumentNumber2" optional />
+        <Field name="idExpiryDate2" type="date" optional />
       </div>
       <div className="grid">
-        <Field name="ID 3 DocumentNumber" optional />
-        <Field name="ID 3 ExpiryDate" type="date" optional />
+        <Field name="idDocumentNumber3" optional />
+        <Field name="idExpiryDate3" type="date" optional />
       </div>
       <div className="grid">
         <Select
@@ -41,7 +48,7 @@ export default function DonerForm() {
         />
        {donorType === DonorType.enum.ORGANIZATION ? (
         <div className="grid">
-          <Field name="abn" type="numbers" />
+          <Field name="abn" optional/>
         </div>
       ) : (
         <Field name="AnyOtherImportantInformation" optional/>

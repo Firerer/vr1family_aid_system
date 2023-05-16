@@ -79,6 +79,7 @@ model PrivateAidDonor {
   idExpiryDate3      DateTime?
   donorType          DonorType
   abn                Int?
+  otherinfo          String?
 }
 
 /// use case 5

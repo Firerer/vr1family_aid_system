@@ -30,7 +30,10 @@ export default function() {
           <Field
             name="category"
             type="select"
-            selections={categories?.map((cate) => cate.name)}
+            options={categories?.map((item) => ({
+              display: item.name,
+              value: item.id.toString(),
+            }))}
           />
         ) : (
           <div>Loading categories...</div>
