@@ -18,12 +18,20 @@ export default function DonerForm() {
     >
       <div className="grid">
         <Field name="name" />
+      </div>
+      <div className="grid">
         <Field name="idDocumentNumber1" />
         <Field name="idExpiryDate1" type="date" />
+      </div>
+      <div className="grid">
         <Field name="idDocumentNumber2" optional />
         <Field name="idExpiryDate2" type="date" optional />
+      </div>
+      <div className="grid">
         <Field name="idDocumentNumber3" optional />
         <Field name="idExpiryDate3" type="date" optional />
+      </div>
+      <div className="grid">
         <Select
           name="donorType"
           options={DonorType.options}

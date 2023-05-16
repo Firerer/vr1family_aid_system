@@ -22,7 +22,7 @@ export const AidRecipientSchema = z.object({
   kids: z.array(KidSchema).optional(),
 });
 
-export const PrivateAidRecipeintSchema = z.object({
+export const PrivateAidRecipientSchema = z.object({
   name: nonempty,
   nationality: nonempty,
   idDocumentNumber1: nonempty,

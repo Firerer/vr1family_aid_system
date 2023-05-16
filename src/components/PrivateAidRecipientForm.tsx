@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PrivateAidRecipeintSchema } from "prisma/zod";
+import { PrivateAidRecipientSchema } from "prisma/zod";
 import _ from "lodash";
 import { Field, Form } from "./Form";
 
@@ -10,7 +10,7 @@ export default function PrivateRecipientForm() {
   return (
     <Form
       title="Aid Recipient Form - Private Information"
-      schema={PrivateAidRecipeintSchema}
+      schema={PrivateAidRecipientSchema}
       submitFn={(data) => {
         console.log(data);
       }}
@@ -22,8 +22,12 @@ export default function PrivateRecipientForm() {
       <div className="grid">
         <Field name="idDocumentNumber1" />
         <Field name="idExpiryDate1" type="date" />
+      </div>
+      <div className="grid">
         <Field name="idDocumentNumber2" optional />
         <Field name="idExpiryDate2" type="date" optional />
+      </div>
+      <div className="grid">
         <Field name="idDocumentNumber3" optional />
         <Field name="idExpiryDate3" type="date" optional />
       </div>
