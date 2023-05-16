@@ -29,7 +29,6 @@ model Kid {
   @@index([parentId])
 }
 
-<<<<<<< Updated upstream
 model PrivateAidRecipient {
   id                String    @id @default(cuid())
   name              String
@@ -42,8 +41,6 @@ model PrivateAidRecipient {
   idExpiryDate3     DateTime?
 }
 
-=======
->>>>>>> Stashed changes
 model Donor {
   id                      String        @id @default(cuid())
   name                    String
@@ -58,7 +55,6 @@ model Donor {
   donatedItems            DonatedItem[]
 }
 
-<<<<<<< Updated upstream
 model PrivateAidDonor {
   id                String    @id @default(cuid())
   name              String
@@ -73,8 +69,6 @@ model PrivateAidDonor {
   abn               Int?
 }
 
-=======
->>>>>>> Stashed changes
 model AidCategory {
   id              Int             @id @default(autoincrement())
   name            String          @unique
@@ -93,11 +87,7 @@ model AidItem {
   brand           String?
   numericSize     Float?
   alphabeticSize  String?
-<<<<<<< Updated upstream
   aidCategory     AidCategory   @relation(fields: [aidCategoryId], references: [id])
-=======
-  aidCategory     AidCategory @relation(fields: [aidCategoryId], references: [id])
->>>>>>> Stashed changes
   relatedKits     KitItem[]
   donatedItems    DonatedItem[]
 
@@ -131,7 +121,6 @@ model ItemRequest {
   note         String
 }
 
-<<<<<<< Updated upstream
 model DonatedItem {
   id        Int     @id @default(autoincrement())
   donorId   String
@@ -144,8 +133,6 @@ model DonatedItem {
   @@index([aidItemId])
 }
 
-=======
->>>>>>> Stashed changes
 enum DonorType {
   INDIVIDUAL
   ORGANIZATION
