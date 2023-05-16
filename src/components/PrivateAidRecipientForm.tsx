@@ -20,16 +20,16 @@ export default function PrivateRecipientForm() {
         <Field name="nationality" />
       </div>
       <div className="grid">
-        <Field name="idDocumentNumber1" />
-        <Field name="idExpiryDate1" type="date" />
+        <Field name="ID 1 DocumentNumber" />
+        <Field name="ID 1 ExpiryDate" type="date" />
       </div>
       <div className="grid">
-        <Field name="idDocumentNumber2" optional />
-        <Field name="idExpiryDate2" type="date" optional />
+        <Field name="ID 2 DocumentNumber" optional />
+        <Field name="ID 2 expiryDate" type="date" optional />
       </div>
       <div className="grid">
-        <Field name="idDocumentNumber3" optional />
-        <Field name="idExpiryDate3" type="date" optional />
+        <Field name="ID 3 DocumentNumber" optional />
+        <Field name="ID 3 ExpiryDate" type="date" optional />
       </div>
       <h5>
         <a

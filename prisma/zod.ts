@@ -72,7 +72,11 @@ export const PrivateOrganizationDonor = PrivateAidDonor.extend({
   abn: positiveInteger,
 })
 
-export const PrivateDonorSchema = z.union([PrivateAidDonor, PrivateOrganizationDonor]);
+export const PrivateIndividualDonor = PrivateAidDonor.extend({
+  otherinfo: nonempty.optional(),
+})
+
+export const PrivateDonorSchema = z.union([PrivateAidDonor, PrivateOrganizationDonor,PrivateIndividualDonor]);
 
 // use case 5
 export const InventoryStatus = z.enum(["LOW", "MEDIUM", "HIGH", "EXCESS"]);
