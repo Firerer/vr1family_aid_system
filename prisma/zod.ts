@@ -96,20 +96,17 @@ export const AidItem = z.object({
 });
 
 export const KitItem = z.object({
-  kitId: z.number(),
-  itemId: z.number(),
-  quantity: z.number(),
-  item: AidItem,
+  itemId: z.coerce.number(),
+  quantity: positiveInteger,
 });
 
 export const Kit = z.object({
-  id: z.number(),
   name: z.string(),
-  items: z.array(KitItem),
+  kitItems: z.array(KitItem),
 });
 
 export const ItemRequest = z.object({
-  itemType: z.string(), 
+  itemType: z.string(),
   itemCategory:z.string(),
   itemName:z.string(),
   // quantity:z.string().refine((val) => !Number.isNaN(parseInt(val, 10)), {

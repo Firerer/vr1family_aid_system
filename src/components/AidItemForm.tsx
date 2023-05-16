@@ -1,42 +1,39 @@
-import { Prisma, PrismaClient } from "@prisma/client";
 import { Form, Field, Select } from "../components/Form";
-import { AidCategorySchema, InventoryStatus, AidItem, Kit } from "prisma/zod";
+import * as zod from "prisma/zod";
 import { api } from "~/utils/api";
 import { useState } from "react";
 
-export default function() {
-  const mutate = api.aidItem.create.useMutation();
+export default function () {
+  const mutation = api.aidItem.create.useMutation();
   const getAllQuery = api.aidCategory.getAll.useQuery;
   const categories = getAllQuery()?.data ?? [];
   const [type, setType] = useState("FOOD");
-  // TODO
-  // const aidKit =
 
   return (
     <Form
       title="Aid Item"
-      schema={AidItem}
+      schema={zod.AidItem}
       submitFn={(data) => {
-        // mutate.mutate(data);
-        if (mutate.isError) {
-          console.log(mutate.error);
+        mutation.mutate(data);
+        if (mutation.isError) {
+          console.log(mutation.error);
         }
-        console.log(mutate.data);
+        console.log(mutation.data);
       }}
     >
       <div className="grid">
         <Field name="name" />
         {categories ? (
-          <Field
+          <Select
             name="category"
             type="select"
-            selections={categories?.map((cate) => cate.name)}
+            options={categories?.map((cate) => cate.name)}
           />
         ) : (
           <div>Loading categories...</div>
         )}
       </div>
-      <Field name="quantity" />
+      <Field name="quantity" type="number" />
 
       <Select
         type="select"

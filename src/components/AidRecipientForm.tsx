@@ -2,17 +2,24 @@ import React, { useState } from "react";
 import { AidRecipientSchema } from "prisma/zod";
 import _ from "lodash";
 import { Field, Form } from "./Form";
+import { api } from "~/utils/api";
+import { date, z } from "zod";
 
 export default function RecipientForm() {
   const [count, setCount] = useState(0);
   const [ids, setIds] = useState(new Array());
+  const mutation = api.aidRecipient.create.useMutation();
 
   return (
     <Form
       title="Aid Recipient Form"
       schema={AidRecipientSchema}
       submitFn={(data) => {
-        console.log(data);
+        mutation.mutate(data);
+        if (mutation.isError) {
+          console.log(mutation.error);
+        }
+        console.log(mutation.data);
       }}
     >
       <div className="grid">

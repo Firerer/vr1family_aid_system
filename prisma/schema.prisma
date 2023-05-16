@@ -1,7 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-// npx prisma studio
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -12,84 +8,73 @@ datasource db {
   relationMode = "prisma"
 }
 
-// use case 1
-
 model AidRecipient {
   id                 String  @id @default(cuid())
   name               String
   age                Int
   previousAddress    String
   totalFamilyMembers Int
-  partnerName        String?
   partnerAge         Int?
+  partnerName        String?
   kids               Kid[]
 }
 
 model Kid {
   id       String       @id @default(cuid())
   parentId String
-  parent   AidRecipient @relation(fields: [parentId], references: [id])
   name     String
   age      Int
+  parent   AidRecipient @relation(fields: [parentId], references: [id])
 
   @@index([parentId])
 }
 
-// use case 2
+<<<<<<< Updated upstream
 model PrivateAidRecipient {
-  id                 String  @id @default(cuid())
-  name               String
-  nationality        String
-  idDocumentNumber1  String
-  idExpiryDate1      DateTime
-  idDocumentNumber2  String?
-  idExpiryDate2      DateTime?
-  idDocumentNumber3  String?
-  idExpiryDate3      DateTime?
+  id                String    @id @default(cuid())
+  name              String
+  nationality       String
+  idDocumentNumber1 String
+  idExpiryDate1     DateTime
+  idDocumentNumber2 String?
+  idExpiryDate2     DateTime?
+  idDocumentNumber3 String?
+  idExpiryDate3     DateTime?
 }
 
+=======
+>>>>>>> Stashed changes
 model Donor {
-  id                      String    @id @default(cuid())
+  id                      String        @id @default(cuid())
   name                    String
   mailingAddress          String
   phoneNumber             String
-  email                   String    @unique
+  email                   String        @unique
   donorType               DonorType
   preferredCommunication  String
   age                     Int?
   organizationHeadquarter String?
   principalContactPerson  String?
-  donatedItems DonatedItem[]
+  donatedItems            DonatedItem[]
 }
 
-enum DonorType {
-  INDIVIDUAL
-  ORGANIZATION
-}
-
+<<<<<<< Updated upstream
 model PrivateAidDonor {
-  id                 String  @id @default(cuid())
-  name               String
-  nationality        String
-  idDocumentNumber1  String
-  idExpiryDate1      DateTime
-  idDocumentNumber2  String?
-  idExpiryDate2      DateTime?
-  idDocumentNumber3  String?
-  idExpiryDate3      DateTime?
-  donorType          DonorType
-  abn                Int?
+  id                String    @id @default(cuid())
+  name              String
+  nationality       String
+  idDocumentNumber1 String
+  idExpiryDate1     DateTime
+  idDocumentNumber2 String?
+  idExpiryDate2     DateTime?
+  idDocumentNumber3 String?
+  idExpiryDate3     DateTime?
+  donorType         DonorType
+  abn               Int?
 }
 
-/// use case 5
-
-enum InventoryStatus {
-  LOW
-  MEDIUM
-  HIGH
-  EXCESS
-}
-
+=======
+>>>>>>> Stashed changes
 model AidCategory {
   id              Int             @id @default(autoincrement())
   name            String          @unique
@@ -97,21 +82,25 @@ model AidCategory {
   items           AidItem[]
 }
 
-// use case 6
 model AidItem {
-  id              Int         @id @default(autoincrement())
+  id              Int           @id @default(autoincrement())
   name            String
   quantity        Int
   aidCategoryId   Int
-  aidCategory     AidCategory @relation(fields: [aidCategoryId], references: [id])
   expiryDate      DateTime?
   mainIngredients String?
   allergenInfo    String?
   brand           String?
   numericSize     Float?
   alphabeticSize  String?
+<<<<<<< Updated upstream
+  aidCategory     AidCategory   @relation(fields: [aidCategoryId], references: [id])
+=======
+  aidCategory     AidCategory @relation(fields: [aidCategoryId], references: [id])
+>>>>>>> Stashed changes
   relatedKits     KitItem[]
-  donatedItems DonatedItem[]
+  donatedItems    DonatedItem[]
+
   @@index([aidCategoryId])
 }
 
@@ -125,30 +114,46 @@ model KitItem {
   kitId    Int
   itemId   Int
   quantity Int
-
-  item AidItem @relation(fields: [itemId], references: [id])
-  kit  Kit     @relation(fields: [kitId], references: [id])
+  item     AidItem @relation(fields: [itemId], references: [id])
+  kit      Kit     @relation(fields: [kitId], references: [id])
 
   @@id([itemId, kitId])
   @@index([itemId])
   @@index([kitId])
 }
-model ItemRequest{
-  id       Int       @id @default(autoincrement())
-  itemType     String    
+
+model ItemRequest {
+  id           Int    @id @default(autoincrement())
+  itemType     String
   itemCategory String
-  itemName String
-  quantity Int
-  note String
+  itemName     String
+  quantity     Int
+  note         String
 }
 
-model DonatedItem{
-  id       Int       @id @default(autoincrement())
+<<<<<<< Updated upstream
+model DonatedItem {
+  id        Int     @id @default(autoincrement())
   donorId   String
   aidItemId Int
-  donor Donor @relation(fields: [donorId], references: [id])
-  aidItem AidItem @relation(fields: [aidItemId],references: [id])
-  quantity Int
+  quantity  Int
+  donor     Donor   @relation(fields: [donorId], references: [id])
+  aidItem   AidItem @relation(fields: [aidItemId], references: [id])
+
   @@index([donorId])
   @@index([aidItemId])
+}
+
+=======
+>>>>>>> Stashed changes
+enum DonorType {
+  INDIVIDUAL
+  ORGANIZATION
+}
+
+enum InventoryStatus {
+  LOW
+  MEDIUM
+  HIGH
+  EXCESS
 }

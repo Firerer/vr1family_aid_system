@@ -1,4 +1,4 @@
-import { Form, Field } from "../components/Form";
+import { Form, Field, Select } from "../components/Form";
 import { AidCategorySchema, InventoryStatus } from "prisma/zod";
 import { api } from "~/utils/api";
 
@@ -19,10 +19,10 @@ export default function AidCategoryForm() {
     >
       <div className="grid">
         <Field name="name" />
-        <Field
+        <Select
           name="inventoryStatus"
           type="select"
-          selections={InventoryStatus.options}
+          options={InventoryStatus.options}
         />
       </div>
     </Form>

@@ -65,7 +65,7 @@ function parseFormData<
   if (res.success) {
     return [res.data, null];
   } else {
-    console.log(res.error)
+    console.error(res.error.format());
     // @ts-ignore
     return [data, res.error.format()];
   }
@@ -83,6 +83,7 @@ export function Form<Schema extends z.ZodTypeAny, Data = z.infer<Schema>>({
   children: React.ReactElement[] | React.ReactElement;
 }) {
   const onEvent: FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
     const target = e.target;
     const [data, err] = parseFormData(schema, e.currentTarget);
     if (

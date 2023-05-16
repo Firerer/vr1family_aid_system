@@ -1,10 +1,15 @@
-import { Form, Field } from "../components/Form";
+import { Form, Field, Select } from "../components/Form";
 import { AidCategorySchema, InventoryStatus, Kit } from "prisma/zod";
 import { useState } from "react";
 import { api } from "~/utils/api";
 
-export default function() {
-  const mutate = api.aidKit.useMutation();
+export default function () {
+  const mutate = api.aidKit.create.useMutation();
+  const items = api.aidItem.getAllSimple.useQuery();
+  const opts = items.data?.map((item) => ({
+    display: item.name,
+    value: item.id.toString(),
+  }));
   const [count, setCount] = useState(0);
   const [ids, setIds] = useState(new Array());
 
@@ -13,20 +18,15 @@ export default function() {
       title="Aid Kit"
       schema={Kit}
       submitFn={(data) => {
-        // mutate.mutate(data);
+        mutate.mutate(data);
         if (mutate.isError) {
           console.log(mutate.error);
         }
-        console.log(data);
       }}
     >
       <div className="grid">
         <Field name="name" />
-        <Field
-          name="inventoryStatus"
-          type="select"
-          selections={InventoryStatus.options}
-        />
+        <Select name="inventoryStatus" options={InventoryStatus.options} />
       </div>
 
       <h5>
@@ -51,7 +51,8 @@ export default function() {
                 {"Remove"}
               </a>
               <div className="grid">
-                {"Item"} {i}
+                <Select name={`kitItems[${i}].itemId`} options={opts ?? []} />
+                <Field name={`kitItems[${i}].quantity`} type="number" />
               </div>
             </div>
           );

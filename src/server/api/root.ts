@@ -6,7 +6,7 @@ import {
   AidItem,
   Kit,
   ItemRequest,
-  DonatedItem
+  DonatedItem,
 } from "prisma/zod";
 import { Prisma } from "@prisma/client";
 import { string } from "zod";
@@ -22,36 +22,50 @@ export const appRouter = createTRPCRouter({
     create: publicProcedure.input(AidItem).mutation(async ({ input, ctx }) => {
       return await ctx.prisma.aidItem.create({ data: input });
     }),
+    getAllSimple: publicProcedure.query(async ({ ctx }) => {
+      return await ctx.prisma.aidItem.findMany({
+        select: {
+          id: true,
+          name: true,
+          quantity: true,
+        },
+      });
+    }),
     getAll: publicProcedure.query(async ({ ctx }) => {
       return await ctx.prisma.aidItem.findMany();
     }),
-    getByCategory: publicProcedure.input(
-      string()
-    ).query(async ({ input ,ctx }) => {
-      return await ctx.prisma.aidItem.findMany({
-        where:{
-          aidCategory:{
-            name : input
-          } 
-        }
-      });
-    }),
+    getByCategory: publicProcedure
+      .input(string())
+      .query(async ({ input, ctx }) => {
+        return await ctx.prisma.aidItem.findMany({
+          where: {
+            aidCategory: {
+              name: input,
+            },
+          },
+        });
+      }),
   }),
   aidKit: createTRPCRouter({
-    create: publicProcedure
-      .input(Kit)
-      .mutation(async ({ input, ctx }) => {
-        return await ctx.prisma.kit.create({ data: input });
-      }),
+    create: publicProcedure.input(Kit).mutation(async ({ input, ctx }) => {
+      return await ctx.prisma.kit.create({
+        data: {
+          ...input,
+          kitItems: {
+            createMany: { data: input.kitItems },
+          },
+        },
+      });
+    }),
     getAll: publicProcedure.query(async ({ ctx }) => {
       return await ctx.prisma.kit.findMany({
-        include:{
-          kitItems:{
-            include:{
-              item:true
-            }
-          }
-        }
+        include: {
+          kitItems: {
+            include: {
+              item: true,
+            },
+          },
+        },
       });
     }),
   }),
@@ -66,9 +80,9 @@ export const appRouter = createTRPCRouter({
       }),
     getAll: publicProcedure.query(async ({ ctx }) => {
       return await ctx.prisma.aidCategory.findMany({
-        include:{
-          items:true
-        }
+        include: {
+          items: true,
+        },
       });
     }),
   }),
@@ -106,11 +120,9 @@ export const appRouter = createTRPCRouter({
           console.log(error);
         }
       }),
-      getAll: publicProcedure.query(async ({ ctx }) => {
-        return await ctx.prisma.donor.findMany({
-          
-        });
-      }),
+    getAll: publicProcedure.query(async ({ ctx }) => {
+      return await ctx.prisma.donor.findMany();
+    }),
   }),
   itemRequest: createTRPCRouter({
     create: publicProcedure
