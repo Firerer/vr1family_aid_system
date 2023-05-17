@@ -61,6 +61,28 @@ export default function RecipientForm() {
           );
         })}
       </>
+
+      <fieldset>
+        <legend>
+          <h5>Private Information</h5>
+        </legend>
+
+        <div className="grid">
+          <Field name="nationality" optional />
+        </div>
+        <div className="grid">
+          <Field name="idDocumentNumber1" type="file" optional />
+          <Field name="idExpiryDate1" type="date" optional />
+        </div>
+        <div className="grid">
+          <Field name="ID 2 DocumentNumber" optional />
+          <Field name="ID 2 expiryDate" type="date" optional />
+        </div>
+        <div className="grid">
+          <Field name="ID 3 DocumentNumber" optional />
+          <Field name="ID 3 ExpiryDate" type="date" optional />
+        </div>
+      </fieldset>
     </Form>
   );
 }

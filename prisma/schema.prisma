@@ -9,7 +9,7 @@ datasource db {
 }
 
 model AidRecipient {
-  id                 String  @id @default(cuid())
+  id                 String    @id @default(cuid())
   name               String
   age                Int
   previousAddress    String
@@ -17,6 +17,14 @@ model AidRecipient {
   partnerAge         Int?
   partnerName        String?
   kids               Kid[]
+  // private
+  nationality        String?
+  idDocumentNumber1  String?
+  idExpiryDate1      DateTime?
+  idDocumentNumber2  String?
+  idExpiryDate2      DateTime?
+  idDocumentNumber3  String?
+  idExpiryDate3      DateTime?
 }
 
 model Kid {
@@ -67,6 +75,7 @@ model PrivateAidDonor {
   idExpiryDate3     DateTime?
   donorType         DonorType
   abn               Int?
+  otherinfo         String?
 }
 
 model AidCategory {

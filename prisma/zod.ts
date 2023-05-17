@@ -1,12 +1,16 @@
 import { z } from "zod";
 const nonempty = z.string().trim().min(1, { message: "Field cannot be empty" });
-const date = z.string().datetime({ message: "Invalid date" });
+const date = z.coerce.date({
+  required_error: "Please select a date and time",
+  invalid_type_error: "That's not a date!",
+});
 const positiveInteger = z.coerce
   .number()
   .int({ message: "Age must be an integer" })
   .finite({ message: "Age must be a finite number" })
   .nonnegative({ message: "Age cannot be negative" });
 
+// use case 1
 export const KidSchema = z.object({
   name: nonempty,
   age: positiveInteger,
@@ -20,8 +24,17 @@ export const AidRecipientSchema = z.object({
   partnerName: nonempty.optional(),
   partnerAge: positiveInteger.optional(),
   kids: z.array(KidSchema).optional(),
+  // use case 2
+  nationality: nonempty.optional(),
+  idDocumentNumber1: nonempty.optional(),
+  idExpiryDate1: date.optional(),
+  idDocumentNumber2: nonempty.optional(),
+  idExpiryDate2: date.optional(),
+  idDocumentNumber3: nonempty.optional(),
+  idExpiryDate3: date.optional(),
 });
 
+// use case 2
 export const PrivateAidRecipientSchema = z.object({
   name: nonempty,
   nationality: nonempty,
@@ -29,12 +42,16 @@ export const PrivateAidRecipientSchema = z.object({
   idExpiryDate1: date,
   idDocumentNumber2: nonempty.optional(),
   idExpiryDate2: date.optional(),
-  idDocumentNumber3: nonempty.optional(), 
+  idDocumentNumber3: nonempty.optional(),
   idExpiryDate3: date.optional(),
 });
 
+// use case 3
 export const DonorType = z.enum(["INDIVIDUAL", "ORGANIZATION"]);
-export const RequestItemType = z.enum(["Pre-packed Aid Kits", "Individual Items"]);
+export const RequestItemType = z.enum([
+  "Pre-packed Aid Kits",
+  "Individual Items",
+]);
 export const PerferedCommunication = z.enum(["EMAIL", "PHONE", "MAIL"]);
 const CommonDonorFields = z.object({
   name: nonempty,
@@ -56,6 +73,7 @@ export const OrganizationDonor = CommonDonorFields.extend({
 
 export const DonorSchema = z.union([IndividualDonor, OrganizationDonor]);
 
+// use case 4
 export const PrivateAidDonor = z.object({
   name: nonempty,
   nationality: nonempty,
@@ -63,36 +81,30 @@ export const PrivateAidDonor = z.object({
   idExpiryDate1: date,
   idDocumentNumber2: nonempty.optional(),
   idExpiryDate2: date.optional(),
-  idDocumentNumber3: nonempty.optional(), 
+  idDocumentNumber3: nonempty.optional(),
   idExpiryDate3: date.optional(),
   donorType: DonorType,
 });
 
 export const PrivateOrganizationDonor = PrivateAidDonor.extend({
   abn: positiveInteger,
-})
+});
 
 export const PrivateIndividualDonor = PrivateAidDonor.extend({
   otherinfo: nonempty.optional(),
-})
+});
 
-export const PrivateDonorSchema = z.union([PrivateAidDonor, PrivateOrganizationDonor,PrivateIndividualDonor]);
+export const PrivateDonorSchema = z.union([
+  PrivateAidDonor,
+  PrivateOrganizationDonor,
+  PrivateIndividualDonor,
+]);
 
 // use case 5
 export const InventoryStatus = z.enum(["LOW", "MEDIUM", "HIGH", "EXCESS"]);
 export const AidCategorySchema = z.object({
   name: nonempty,
   inventoryStatus: InventoryStatus,
-});
-
-export const AidItem = z.object({
-  name: z.string(),
-  quantity: z.number(),
-  aidCategoryId: z.number(),
-  expirationDate: date,
-  mainIngredients: nonempty,
-  allergenInfo: z.string().optional(),
-  description: nonempty,
 });
 
 export const KitItem = z.object({
@@ -105,18 +117,42 @@ export const Kit = z.object({
   kitItems: z.array(KitItem),
 });
 
+// use case 6
+export const AidItemType = z.enum(["FOOD", "CLOTHING"]);
+export const CommonAidItem = z.object({
+  name: z.string(),
+  quantity: positiveInteger,
+  aidCategoryId: positiveInteger,
+  aidItemType: AidItemType,
+});
+
+export const FoodItem = CommonAidItem.extend({
+  expiryDate: date,
+  mainIngredients: nonempty,
+  allergenInfo: z.string().optional(),
+  description: nonempty,
+});
+
+export const ClothItem = z.object({
+  alphabeticSize: z.string(),
+  numericSize: z.string(),
+});
+
+export const AidItem = z.union([FoodItem, ClothItem]);
+
+// use case 7
 export const ItemRequest = z.object({
   itemType: z.string(),
-  itemCategory:z.string(),
-  itemName:z.string(),
+  itemCategory: z.string(),
+  itemName: z.string(),
   // quantity:z.string().refine((val) => !Number.isNaN(parseInt(val, 10)), {
   //   message: "Expected number, received a string"
   // }),
-  quantity:z.number(),
-  note:z.string(),
+  quantity: z.number(),
+  note: z.string(),
 });
 export const DonatedItem = z.object({
-  donor: DonorSchema, 
+  donor: DonorSchema,
   item: AidItem,
   quantity: z.number(),
 });

@@ -2,6 +2,7 @@ import React, { FormEventHandler } from "react";
 import camelCaseToDisplay from "../utils/camelCaseToDisplay";
 import z from "zod";
 import _, { get, isEmpty, isNil } from "lodash";
+import { env } from "process";
 
 export type SelectAttr = {
   name: string;
@@ -33,16 +34,13 @@ export function Select(props: SelectAttr) {
 export type FieldType = {
   name: string;
   optional?: boolean;
-  type?: React.HTMLInputTypeAttribute;
-  step?: string;
-  selections?: string[] | { display: string; value: string }[];
-  placeholder?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  display?: string;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 export function Field(props: FieldType) {
-  const { name, optional, ...rest } = props;
-  const displayName = camelCaseToDisplay(name.split(".")?.at(-1) ?? name);
+  const { name, optional, display, ...rest } = props;
+  const displayName =
+    display ?? camelCaseToDisplay(name.split(".")?.at(-1) ?? name);
   return (
     <label>
       {displayName} {optional && "(optional)"}
@@ -61,6 +59,16 @@ function parseFormData<
     if (isNil(value) || isEmpty(value)) return;
     _.set(data, key, value);
   });
+
+  form.querySelectorAll("input[type='file']").forEach((el) => {
+    if (el instanceof HTMLInputElement) {
+      const value = el.files?.item(0)?.name;
+      const key = el.name;
+      console.log(key, value);
+      _.set(data, key, value);
+    }
+  });
+
   const res = schema.safeParse(data);
   if (res.success) {
     return [res.data, null];
@@ -87,24 +95,33 @@ export function Form<Schema extends z.ZodTypeAny, Data = z.infer<Schema>>({
     const target = e.target;
     const [data, err] = parseFormData(schema, e.currentTarget);
     if (
+      env.NODE_ENV == "development" ||
+      window.location.hostname == "localhost"
+    )
+      console.log("Data: ", data, "Err: ", err);
+    if (
       target instanceof HTMLInputElement ||
       target instanceof HTMLSelectElement
     ) {
       const targetErr = get(err, target.name)?._errors.at(0);
       if (targetErr) {
-        console.error("Err: ", targetErr);
         target.setCustomValidity(targetErr);
         target.reportValidity();
       } else {
         target.setCustomValidity("");
         target.reportValidity();
-        const targetVal = get(data, target.name);
-        target.value = targetVal ?? "";
+        // const targetVal = get(data, target.name);
+        // target.value = targetVal ?? "";
       }
     } else if (target instanceof HTMLFormElement) {
       if (e.type === "submit" && err === null) {
-        e.preventDefault();
         submitFn(data);
+        if (
+          target.reset &&
+          (env.NODE_ENV == "production" ||
+            window.location.hostname == "localhost")
+        )
+          target.reset();
       }
     }
   };

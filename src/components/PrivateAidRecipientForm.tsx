@@ -20,8 +20,8 @@ export default function PrivateRecipientForm() {
         <Field name="nationality" />
       </div>
       <div className="grid">
-        <Field name="ID 1 DocumentNumber" />
-        <Field name="ID 1 ExpiryDate" type="date" />
+        <Field name="idDocumentNumber1" />
+        <Field name="idExpiryDate1" type="date" />
       </div>
       <div className="grid">
         <Field name="ID 2 DocumentNumber" optional />

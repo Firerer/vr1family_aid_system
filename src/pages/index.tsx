@@ -33,13 +33,13 @@ const Home: NextPage = () => {
             </li>
           </ul>
         </nav>
-        <AidKitForm />
-        <AidItemForm />
-        <AidCategoryForm />
         <AidRecipientForm />
-        <PrivateAidRecipientForm/>
-        <PrivateAidDonorForm/>
+        {/*<PrivateAidRecipientForm /> */}
         <AidDonorForm />
+        <PrivateAidDonorForm />
+        <AidCategoryForm />
+        <AidItemForm />
+        <AidKitForm />
         <ItemRequestForm />
         <DonatedItemForm />
       </main>
