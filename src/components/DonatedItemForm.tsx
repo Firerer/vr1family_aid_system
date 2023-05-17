@@ -43,7 +43,7 @@ export default function DonatedItemForm() {
 
   const updateTableData = () => {
     event.preventDefault();
-    if(selectedDonorInfo=="" || Number.isNaN(quantity) || quantity==0){
+    if(selectedDonorInfo=="" || Number.isNaN(quantity) || quantity<=0){
       console.log("invalid input")
       return;
     }
