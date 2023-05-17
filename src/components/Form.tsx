@@ -8,11 +8,12 @@ export type SelectAttr = {
   name: string;
   optional?: boolean;
   options: string[] | { display: string; value: string }[];
+  label?: string;
   ref?: React.RefObject<HTMLSelectElement>;
 } & React.InputHTMLAttributes<HTMLSelectElement>;
 export function Select(props: SelectAttr) {
-  const { name, optional, options: selections, ...rest } = props;
-  const displayName = camelCaseToDisplay(name.split(".")?.at(-1) ?? name);
+  const { name, optional, label, options: selections, ...rest } = props;
+  const displayName = label ?? camelCaseToDisplay(name.split(".")?.at(-1) ?? name);
   return (
     <label>
       {displayName} {optional && "(optional)"}

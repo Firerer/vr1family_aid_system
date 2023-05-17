@@ -1,5 +1,5 @@
 import { Form, Field, Select } from "../components/Form";
-import * as zod from "prisma/zod";
+import { AidItemType, AidItem } from "prisma/zod";
 import { api } from "~/utils/api";
 import { useState } from "react";
 
@@ -12,7 +12,7 @@ export default function () {
   return (
     <Form
       title="Aid Item"
-      schema={zod.AidItem}
+      schema={AidItem}
       submitFn={(data) => {
         mutation.mutate(data);
         if (mutation.isError) {
@@ -25,9 +25,13 @@ export default function () {
         <Field name="name" />
         {categories ? (
           <Select
-            name="category"
+            name="aidCategoryId"
+            label="Category"
             type="select"
-            options={categories?.map((cate) => cate.name)}
+            options={categories?.map((item) => ({
+              display: item.name,
+              value: item.id.toString(),
+            }))}
           />
         ) : (
           <div>Loading categories...</div>
@@ -38,10 +42,9 @@ export default function () {
       <Select
         type="select"
         name="aidItemType"
-        options={["FOOD", "CLOTHING"]}
+        options={AidItemType.options}
         onChange={(e) => setType(e.target.value)}
       />
-
       {type === "FOOD" ? (
         <>
           <Field name="brand" />
@@ -49,10 +52,14 @@ export default function () {
           <Field name="mainIngredients" />
           <Field name="allergenInfo" />
         </>
-      ) : (
+      ) : type === "CLOTHING" ? (
         <>
           <Field name="alphabeticSize" placeholder="Such as XL, XXL" />
           <Field name="numericSize" type="number" step="0.5" />
+        </>
+      ) : (
+        <>
+          <Field name="description" optional />
         </>
       )}
     </Form>

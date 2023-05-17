@@ -16,11 +16,12 @@ import { string } from "zod";
  *
  * All routers added in /api/routers should be manually added here.
  */
-Prisma.AidCategoryScalarFieldEnum;
 export const appRouter = createTRPCRouter({
   aidItem: createTRPCRouter({
     create: publicProcedure.input(AidItem).mutation(async ({ input, ctx }) => {
-      return await ctx.prisma.aidItem.create({ data: input });
+      return await ctx.prisma.aidItem.create({
+        data: input,
+      });
     }),
     getAllSimple: publicProcedure.query(async ({ ctx }) => {
       return await ctx.prisma.aidItem.findMany({

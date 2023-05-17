@@ -118,7 +118,7 @@ export const Kit = z.object({
 });
 
 // use case 6
-export const AidItemType = z.enum(["FOOD", "CLOTHING"]);
+export const AidItemType = z.enum(["FOOD", "CLOTHING", "ELSE"]);
 export const CommonAidItem = z.object({
   name: z.string(),
   quantity: positiveInteger,
@@ -126,19 +126,22 @@ export const CommonAidItem = z.object({
   aidItemType: AidItemType,
 });
 
+export const ElseItem = CommonAidItem.extend({
+  description: nonempty.optional(),
+});
+
 export const FoodItem = CommonAidItem.extend({
   expiryDate: date,
   mainIngredients: nonempty,
   allergenInfo: z.string().optional(),
-  description: nonempty,
 });
 
-export const ClothItem = z.object({
+export const ClothItem = CommonAidItem.extend({
   alphabeticSize: z.string(),
-  numericSize: z.string(),
+  numericSize: z.coerce.number(),
 });
 
-export const AidItem = z.union([FoodItem, ClothItem]);
+export const AidItem = z.union([FoodItem, ClothItem, ElseItem]);
 
 // use case 7
 export const ItemRequest = z.object({

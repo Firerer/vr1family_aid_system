@@ -51,7 +51,11 @@ export default function () {
                 {"Remove"}
               </a>
               <div className="grid">
-                <Select name={`kitItems[${i}].itemId`} options={opts ?? []} />
+                <Select
+                  name={`kitItems[${i}].itemId`}
+                  label="Item"
+                  options={opts ?? []}
+                />
                 <Field name={`kitItems[${i}].quantity`} type="number" />
               </div>
             </div>

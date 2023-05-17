@@ -90,6 +90,7 @@ model AidItem {
   name            String
   quantity        Int
   aidCategoryId   Int
+  aidItemType     String?
   expiryDate      DateTime?
   mainIngredients String?
   allergenInfo    String?
