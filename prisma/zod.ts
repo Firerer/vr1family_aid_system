@@ -69,14 +69,14 @@ export const PrivateAidDonor = z.object({
 });
 
 export const PrivateOrganizationDonor = PrivateAidDonor.extend({
-  abn: positiveInteger,
+  abn: positiveInteger.optional(),
 })
 
 export const PrivateIndividualDonor = PrivateAidDonor.extend({
   otherinfo: nonempty.optional(),
 })
 
-export const PrivateDonorSchema = z.union([PrivateAidDonor, PrivateOrganizationDonor,PrivateIndividualDonor]);
+// export const PrivateDonorSchema = z.union([PrivateAidDonor, PrivateOrganizationDonor,PrivateIndividualDonor]);
 
 // use case 5
 export const InventoryStatus = z.enum(["LOW", "MEDIUM", "HIGH", "EXCESS"]);
@@ -87,7 +87,7 @@ export const AidCategorySchema = z.object({
 
 export const AidItem = z.object({
   name: z.string(),
-  quantity: z.number(),
+  quantity: positiveInteger,
   aidCategoryId: z.number(),
   expirationDate: date,
   mainIngredients: nonempty,

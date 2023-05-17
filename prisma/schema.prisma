@@ -56,17 +56,27 @@ model Donor {
 }
 
 model PrivateAidDonor {
-  id                String    @id @default(cuid())
-  name              String
-  nationality       String
-  idDocumentNumber1 String
-  idExpiryDate1     DateTime
-  idDocumentNumber2 String?
-  idExpiryDate2     DateTime?
-  idDocumentNumber3 String?
-  idExpiryDate3     DateTime?
-  donorType         DonorType
-  abn               Int?
+  id                 String  @id @default(cuid())
+  name               String
+  nationality        String
+  idDocumentNumber1  String
+  idExpiryDate1      DateTime
+  idDocumentNumber2  String?
+  idExpiryDate2      DateTime?
+  idDocumentNumber3  String?
+  idExpiryDate3      DateTime?
+  donorType          DonorType
+  abn                Int?
+  otherinfo          String?
+}
+
+/// use case 5
+
+enum InventoryStatus {
+  LOW
+  MEDIUM
+  HIGH
+  EXCESS
 }
 
 model AidCategory {
@@ -136,11 +146,4 @@ model DonatedItem {
 enum DonorType {
   INDIVIDUAL
   ORGANIZATION
-}
-
-enum InventoryStatus {
-  LOW
-  MEDIUM
-  HIGH
-  EXCESS
 }

@@ -83,7 +83,7 @@ export function Form<Schema extends z.ZodTypeAny, Data = z.infer<Schema>>({
   children: React.ReactElement[] | React.ReactElement;
 }) {
   const onEvent: FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const target = e.target;
     const [data, err] = parseFormData(schema, e.currentTarget);
     if (

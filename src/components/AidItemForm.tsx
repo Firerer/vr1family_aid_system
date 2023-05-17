@@ -27,7 +27,10 @@ export default function () {
           <Select
             name="category"
             type="select"
-            options={categories?.map((cate) => cate.name)}
+            options={categories?.map((item) => ({
+              display: item.name,
+              value: item.id.toString(),
+            }))}
           />
         ) : (
           <div>Loading categories...</div>

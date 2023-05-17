@@ -7,6 +7,7 @@ import {
   Kit,
   ItemRequest,
   DonatedItem,
+  PrivateAidDonor
 } from "prisma/zod";
 import { Prisma } from "@prisma/client";
 import { string } from "zod";
@@ -139,6 +140,20 @@ export const appRouter = createTRPCRouter({
       .mutation(async ({ input, ctx }) => {
         return await ctx.prisma.donatedItem.create({
           data: input,
+        });
+      }),
+  }),
+  privateAidDoner: createTRPCRouter({
+    create: publicProcedure
+      .input(PrivateAidDonor)
+      .mutation(async ({ input, ctx }) => {
+        return await ctx.prisma.privateAidDonor.create({
+          data: input,
+        });
+      }),
+      getAll: publicProcedure.query(async ({ ctx }) => {
+        return await ctx.prisma.privateAidDonor.findMany({
+          
         });
       }),
   }),
