@@ -15,7 +15,7 @@ export default function DonerForm() {
   return (
     <Form
       schema={DonorSchema}
-      title="Donor Form"
+      title="Aid Donor Form"
       submitFn={(data) => {
         mutation.mutate(data);
         if (mutation.isError) {
@@ -59,7 +59,7 @@ export default function DonerForm() {
         </legend>
 
         <div className="grid">
-          <Field name="nationality" optional />
+          <Field name="nationality" optional={true} display="Nationality" />
           <div className="grid">
             {donorType === DonorType.enum.ORGANIZATION ? (
               <Field name="abn" display="ABN" type="numbers" optional />

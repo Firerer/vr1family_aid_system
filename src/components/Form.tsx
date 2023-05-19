@@ -45,7 +45,7 @@ export function Field(props: FieldType) {
     display ?? camelCaseToDisplay(name.split(".")?.at(-1) ?? name);
   return (
     <label>
-      {displayName} {optional && !display && "(optional)"}
+      {displayName} {optional && display === undefined ? "(optional)" : ""}
       <input name={name} required={!optional} autoComplete="off" {...rest} />
     </label>
   );

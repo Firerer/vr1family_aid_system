@@ -67,11 +67,11 @@ export default function RecipientForm() {
         </legend>
 
         <div className="grid">
-          <Field name="nationality" optional />
+          <Field name="nationality" optional display="Nationality" />
         </div>
         <div className="grid">
-          <Field name="idDocumentNumber1" type="file" optional />
-          <Field name="idExpiryDate1" type="date" optional />
+          <Field name="idDocumentNumber1" display="Id Document Number1" type="file" optional />
+          <Field name="idExpiryDate1" display="Id Expiry Date1" type="date" optional />
         </div>
         <div className="grid">
           <Field name="idDocumentNumber2" type="file" optional />
