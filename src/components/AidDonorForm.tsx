@@ -7,8 +7,9 @@ import { api } from "~/utils/api";
 type DonerT = z.infer<typeof DonorSchema>;
 export default function DonerForm() {
   const [donorType, setDonorType] = useState<DonerT["donorType"]>(
-    DonorType.enum.ORGANIZATION,
+    DonorType.enum.INDIVIDUAL,
   );
+
   const mutation = api.aidDoner.create.useMutation();
 
   return (
@@ -40,7 +41,7 @@ export default function DonerForm() {
 
       {donorType === DonorType.enum.ORGANIZATION ? (
         <div className="grid">
-          <Field name="organizationName" />
+          <Field name="principalContactPerson" />
           <Field name="organizationHeadquarter" />
         </div>
       ) : (
