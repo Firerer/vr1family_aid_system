@@ -118,12 +118,7 @@ export function Form<Schema extends z.ZodTypeAny, Data = z.infer<Schema>>({
     } else if (target instanceof HTMLFormElement) {
       if (e.type === "submit" && err === null) {
         submitFn(data);
-        if (
-          target.reset &&
-          (env.NODE_ENV == "production" ||
-            window.location.hostname == "localhost")
-        )
-          target.reset();
+        target.reset();
       }
     }
   };
