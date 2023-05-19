@@ -51,6 +51,35 @@ export default function DonerForm() {
         <Field name="phoneNumber" type="tel" />
       </div>
       <Field name="mailingAddress" />
+
+      <fieldset>
+        <legend>
+          <h5>Private Information</h5>
+        </legend>
+
+        <div className="grid">
+          <Field name="nationality" optional />
+          <div className="grid">
+            {donorType === DonorType.enum.ORGANIZATION ? (
+              <Field name="abn" display="ABN" type="numbers" optional />
+            ) : (
+              <Field name="otherinfo" optional />
+            )}
+          </div>
+        </div>
+        <div className="grid">
+          <Field name="idDocumentNumber1" type="file" optional />
+          <Field name="idExpiryDate1" type="date" optional />
+        </div>
+        <div className="grid">
+          <Field name="idDocumentNumber2" type="file" optional />
+          <Field name="idExpiryDate2" type="date" optional />
+        </div>
+        <div className="grid">
+          <Field name="idDocumentNumber3" type="file" optional />
+          <Field name="idExpiryDate3" type="date" optional />
+        </div>
+      </fieldset>
     </Form>
   );
 }

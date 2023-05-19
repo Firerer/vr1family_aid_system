@@ -61,6 +61,17 @@ model Donor {
   organizationHeadquarter String?
   principalContactPerson  String?
   donatedItems            DonatedItem[]
+
+  //private
+  nationality       String?
+  idDocumentNumber1 String?
+  idExpiryDate1     DateTime?
+  idDocumentNumber2 String?
+  idExpiryDate2     DateTime?
+  idDocumentNumber3 String?
+  idExpiryDate3     DateTime?
+  abn               Int?
+  otherinfo         String?
 }
 
 model PrivateAidDonor {

@@ -36,7 +36,7 @@ const Home: NextPage = () => {
         <AidRecipientForm />
         {/*<PrivateAidRecipientForm /> */}
         <AidDonorForm />
-        <PrivateAidDonorForm />
+        {/* <PrivateAidDonorForm /> */}
         <AidCategoryForm />
         <AidItemForm />
         <AidKitForm />

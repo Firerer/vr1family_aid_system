@@ -60,15 +60,27 @@ const CommonDonorFields = z.object({
   email: nonempty.email(),
   preferredCommunication: PerferedCommunication,
   donorType: DonorType,
+
+  nationality: nonempty.optional(),
+  idDocumentNumber1: nonempty.optional(),
+  idExpiryDate1: date.optional(),
+  idDocumentNumber2: nonempty.optional(),
+  idExpiryDate2: date.optional(),
+  idDocumentNumber3: nonempty.optional(),
+  idExpiryDate3: date.optional(),
 });
 
 export const IndividualDonor = CommonDonorFields.extend({
   age: positiveInteger,
+
+  otherinfo: nonempty.optional(),
 });
 
 export const OrganizationDonor = CommonDonorFields.extend({
   organizationHeadquarter: nonempty,
   principalContactPerson: nonempty,
+
+  abn: positiveInteger.optional(),
 });
 
 export const DonorSchema = z.union([IndividualDonor, OrganizationDonor]);
