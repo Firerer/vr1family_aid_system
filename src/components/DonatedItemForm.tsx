@@ -43,7 +43,7 @@ export default function DonatedItemForm() {
 
   const updateTableData = () => {
     event.preventDefault();
-    if(selectedDonorInfo=="" || Number.isNaN(quantity) || quantity==0){
+    if(selectedDonorInfo=="" || Number.isNaN(quantity) || quantity<=0){
       console.log("invalid input")
       return;
     }
@@ -52,7 +52,8 @@ export default function DonatedItemForm() {
     const name = fields[0]?.replace("Name: ","");
     const phone = fields[1]?.replace("Phone: ","");
     setTableData([...tableData, { category: selectedCategoryName,itemName:selectedItemName, quantity,donorName:name,donorPhone:phone }]);  
-  
+    console.log(selectedDonor)
+    console.log(selectedItem)
   };
   return (
     <form>
@@ -135,8 +136,10 @@ export default function DonatedItemForm() {
           const selectedItem = selectedCategory.items.find((item) => item.name == row.itemName);
           const donor = donors.find((donor)=>donor.name==row.donorName && donor.phoneNumber == row.donorPhone);
           const requestData = {
-            donor: donor, 
-            item: selectedItem,
+            //donor: donor, 
+            //aidItem: selectedItem,
+            donorId:donor.id,
+            aidItemId:Number(selectedItem.id),
             quantity: Number(row.quantity),
           };
           donatedItemApi.mutate(requestData);

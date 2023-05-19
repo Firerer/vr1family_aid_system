@@ -75,12 +75,12 @@ export default function RecipientForm() {
           <Field name="idExpiryDate1" type="date" optional />
         </div>
         <div className="grid">
-          <Field name="ID 2 DocumentNumber" optional />
-          <Field name="ID 2 expiryDate" type="date" optional />
+          <Field name="idDocumentNumber2" type="file" optional />
+          <Field name="idExpiryDate2" type="date" optional />
         </div>
         <div className="grid">
-          <Field name="ID 3 DocumentNumber" optional />
-          <Field name="ID 3 ExpiryDate" type="date" optional />
+          <Field name="idDocumentNumber3" type="file" optional />
+          <Field name="idExpiryDate3" type="date" optional />
         </div>
       </fieldset>
     </Form>
