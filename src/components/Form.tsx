@@ -13,7 +13,8 @@ export type SelectAttr = {
 } & React.InputHTMLAttributes<HTMLSelectElement>;
 export function Select(props: SelectAttr) {
   const { name, optional, label, options: selections, ...rest } = props;
-  const displayName = label ?? camelCaseToDisplay(name.split(".")?.at(-1) ?? name);
+  const displayName =
+    label ?? camelCaseToDisplay(name.split(".")?.at(-1) ?? name);
   return (
     <label>
       {displayName} {optional && "(optional)"}
@@ -44,7 +45,7 @@ export function Field(props: FieldType) {
     display ?? camelCaseToDisplay(name.split(".")?.at(-1) ?? name);
   return (
     <label>
-      {displayName} {optional && "(optional)"}
+      {displayName} {optional && !display && "(optional)"}
       <input name={name} required={!optional} autoComplete="off" {...rest} />
     </label>
   );

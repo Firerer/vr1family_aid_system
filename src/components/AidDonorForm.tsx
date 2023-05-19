@@ -14,7 +14,7 @@ export default function DonerForm() {
   return (
     <Form
       schema={DonorSchema}
-      title="Doner Form"
+      title="Donor Form"
       submitFn={(data) => {
         mutation.mutate(data);
         if (mutation.isError) {
